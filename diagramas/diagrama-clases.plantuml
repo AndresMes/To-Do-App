@@ -1,0 +1,72 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+'===== ENTIDADES PRINCIPALES =====
+class Usuario {
+  - id: Long
+  - nombre: String
+  - email: String
+  - contraseña: String
+  - rol: String
+  --
+  +getTareas(): List<Tarea>
+}
+
+class Tarea {
+  - id: Long
+  - titulo: String
+  - descripcion: String
+  - prioridad: Prioridad
+  - fechaLimite: LocalDateTime
+  - horario: LocalTime
+  - recurrente: Boolean
+  - completada: Boolean
+  --
+  +agregarSubtarea(): void
+}
+
+class Subtarea {
+  - id: Long
+  - titulo: String
+  - completada: Boolean
+}
+
+class Categoria {
+  - id: Long
+  - nombre: String
+}
+
+class Lista {
+  - id: Long
+  - nombre: String
+  - tipo: TipoLista <<enum>>  ' DIARIA o SEMANAL
+  - fechaInicio: LocalDate
+}
+
+class Notificacion {
+  - id: Long
+  - mensaje: String
+  - enviada: Boolean
+  - fechaEnvio: LocalDateTime
+}
+
+enum Prioridad {
+  ALTA
+  MEDIA
+  BAJA
+}
+
+enum TipoLista {
+  DIARIA
+  SEMANAL
+}
+
+'===== RELACIONES =====
+
+Usuario "1" --> "0..*" Tarea : crea >
+Tarea "1" --> "0..*" Subtarea
+Tarea "1" --> "0..1" Categoria
+Tarea "0..*" <-- "1" Lista
+Tarea "1" --> "0..*" Notificacion
+
+@enduml
