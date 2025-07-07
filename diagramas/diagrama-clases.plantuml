@@ -7,9 +7,14 @@ class Usuario {
   - nombre: String
   - email: String
   - contraseña: String
-  - rol: String
+  - Rol: String
   --
   +getTareas(): List<Tarea>
+}
+
+enum Rol {
+  ADMIN
+  USUARIO
 }
 
 class Tarea {
